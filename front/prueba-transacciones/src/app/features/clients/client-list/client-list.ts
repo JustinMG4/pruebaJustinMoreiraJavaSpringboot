@@ -71,7 +71,7 @@ export class ClientListComponent implements OnInit {
       this.editingClientId.set(null);
       this.clientForm.reset({ age: 18, isMale: true });
       // Volvemos a hacer obligatoria la contraseña
-      this.clientForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
+      this.clientForm.get('password')?.setValidators([Validators.required, Validators.minLength(4)]);
       this.clientForm.get('password')?.updateValueAndValidity();
     }
 
@@ -87,6 +87,13 @@ export class ClientListComponent implements OnInit {
   onSubmit() {
     if (this.clientForm.invalid) {
       this.clientForm.markAllAsTouched();
+      
+      Swal.fire({
+        icon: 'warning',
+        title: 'Información incompleta',
+        text: 'Por favor, verifica que todos los campos estén llenos y el PIN tenga al menos 4 dígitos.',
+        confirmButtonColor: '#2563eb'
+      });
       return;
     }
 

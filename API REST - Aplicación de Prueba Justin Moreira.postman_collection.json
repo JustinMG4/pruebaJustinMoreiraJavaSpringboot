@@ -1,0 +1,1306 @@
+{
+  "info": {
+    "_postman_id": "7722c920-722f-4599-9216-a5e011121d04",
+    "name": "API REST - Aplicación de Prueba Justin Moreira",
+    "description": "API REST para la aplicación de prueba de Justin Moreira. Gestion de cuentas y transacciones\n\nContact Support:\n Name: Justin Moreira\n Email: justinmoreiragarcia@gmail.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36937376"
+  },
+  "item": [
+    {
+      "name": "clients",
+      "item": [
+        {
+          "name": "update",
+          "item": [
+            {
+              "name": "update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\",\n  \"age\": 4150,\n  \"isMale\": false,\n  \"identificationNumber\": \"string\",\n  \"direction\": \"string\",\n  \"phoneNumber\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/clients/update?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "update"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\",\n  \"age\": 4150,\n  \"isMale\": false,\n  \"identificationNumber\": \"string\",\n  \"direction\": \"string\",\n  \"phoneNumber\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/update?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "update"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": \"\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "verify-password",
+          "item": [
+            {
+              "name": "verify Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "string",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/clients/verify-password?clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "verify-password"
+                  ],
+                  "query": [
+                    {
+                      "key": "clientId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "string",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/verify-password?clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "verify-password"
+                      ],
+                      "query": [
+                        {
+                          "key": "clientId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "false"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"direction\": \"string\",\n  \"identificationNumber\": \"string\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"age\": 3485,\n  \"isMale\": false\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/clients/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "create"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"direction\": \"string\",\n  \"identificationNumber\": \"string\",\n  \"name\": \"string\",\n  \"password\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"age\": 3485,\n  \"isMale\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"11601cc0-b7f9-f57a-7dbc-debbc8cf41cf\",\n  \"name\": \"string\",\n  \"age\": 4504,\n  \"isMale\": true,\n  \"identificationNumber\": \"string\",\n  \"direction\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"status\": \"ACTIVE\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "delete",
+          "item": [
+            {
+              "name": "delete",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clients/delete?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "delete"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/delete?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "delete"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": \"\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "change-status",
+          "item": [
+            {
+              "name": "change Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clients/change-status?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3&status=SUSPENDED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "change-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    },
+                    {
+                      "key": "status",
+                      "value": "SUSPENDED"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/change-status?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3&status=SUSPENDED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "change-status"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        },
+                        {
+                          "key": "status",
+                          "value": "SUSPENDED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": \"\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "by-id",
+          "item": [
+            {
+              "name": "get By Id",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clients/by-id?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "by-id"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/by-id?id=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "by-id"
+                      ],
+                      "query": [
+                        {
+                          "key": "id",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"11601cc0-b7f9-f57a-7dbc-debbc8cf41cf\",\n  \"name\": \"string\",\n  \"age\": 4504,\n  \"isMale\": true,\n  \"identificationNumber\": \"string\",\n  \"direction\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"status\": \"ACTIVE\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "all",
+          "item": [
+            {
+              "name": "get All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/clients/all?status=SUSPENDED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "clients",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "SUSPENDED"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/clients/all?status=SUSPENDED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "clients",
+                        "all"
+                      ],
+                      "query": [
+                        {
+                          "key": "status",
+                          "value": "SUSPENDED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": \"053833e2-8876-4bd0-db93-c5b15f0740fe\",\n    \"name\": \"string\",\n    \"age\": 4153,\n    \"isMale\": false,\n    \"identificationNumber\": \"string\",\n    \"direction\": \"string\",\n    \"phoneNumber\": \"string\",\n    \"status\": \"INACTIVE\"\n  },\n  {\n    \"id\": \"be3183ad-69f6-1aa3-7554-6a3172e139b8\",\n    \"name\": \"string\",\n    \"age\": 2504,\n    \"isMale\": false,\n    \"identificationNumber\": \"string\",\n    \"direction\": \"string\",\n    \"phoneNumber\": \"string\",\n    \"status\": \"SUSPENDED\"\n  }\n]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "create Transaction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 2437.4403465111595,\n  \"type\": \"DEBITO\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/transactions/create?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "create"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": 2437.4403465111595,\n  \"type\": \"DEBITO\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/create?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        "create"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"00871304-c685-9196-6b4c-b2a4638bc1be\",\n  \"date\": \"2005-02-22\",\n  \"type\": \"DEBITO\",\n  \"amount\": 6071.533645389899,\n  \"accountNumber\": \"string\",\n  \"balanceAfterTransaction\": 7024.138488193576\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "all-filtered",
+          "item": [
+            {
+              "name": "get All Transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/transactions/all-filtered?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3&startDate=1985-12-06&endDate=1985-12-06",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "all-filtered"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1985-12-06"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "1985-12-06"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/transactions/all-filtered?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3&startDate=1985-12-06&endDate=1985-12-06",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "transactions",
+                        "all-filtered"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        },
+                        {
+                          "key": "startDate",
+                          "value": "1985-12-06"
+                        },
+                        {
+                          "key": "endDate",
+                          "value": "1985-12-06"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": \"83639ea1-3dc9-bfc8-ba12-b273dbd6d8c0\",\n    \"date\": \"1979-10-07\",\n    \"type\": \"CREDITO\",\n    \"amount\": 8095.696241639501,\n    \"accountNumber\": \"string\"\n  },\n  {\n    \"id\": \"5672039b-64b8-e98a-1547-260ea22c5e0a\",\n    \"date\": \"1951-12-13\",\n    \"type\": \"CREDITO\",\n    \"amount\": 7787.528855493426,\n    \"accountNumber\": \"string\"\n  }\n]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "create 1",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/create?type=CORRIENTE&clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "create"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "CORRIENTE"
+                    },
+                    {
+                      "key": "clientId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/create?type=CORRIENTE&clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "create"
+                      ],
+                      "query": [
+                        {
+                          "key": "type",
+                          "value": "CORRIENTE"
+                        },
+                        {
+                          "key": "clientId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"813f4103-5df4-ee7e-4045-b9ba566b9958\",\n  \"accountNumber\": \"string\",\n  \"balance\": 1192.7415187526158,\n  \"status\": \"ACTIVA\",\n  \"type\": \"CORRIENTE\",\n  \"holderName\": \"string\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "close",
+          "item": [
+            {
+              "name": "close Account",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/close?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "close"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/close?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "close"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": \"\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "change-status",
+          "item": [
+            {
+              "name": "change Status 1",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/change-status?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3&newStatus=SUSPENDIDA",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "change-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    },
+                    {
+                      "key": "newStatus",
+                      "value": "SUSPENDIDA"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/change-status?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3&newStatus=SUSPENDIDA",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "change-status"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        },
+                        {
+                          "key": "newStatus",
+                          "value": "SUSPENDIDA"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"success\": true,\n  \"message\": \"string\",\n  \"data\": \"\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "by-id",
+          "item": [
+            {
+              "name": "get By Id 1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/by-id?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "by-id"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/by-id?accountId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "by-id"
+                      ],
+                      "query": [
+                        {
+                          "key": "accountId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"813f4103-5df4-ee7e-4045-b9ba566b9958\",\n  \"accountNumber\": \"string\",\n  \"balance\": 1192.7415187526158,\n  \"status\": \"ACTIVA\",\n  \"type\": \"CORRIENTE\",\n  \"holderName\": \"string\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "all-by-status",
+          "item": [
+            {
+              "name": "get All By Status",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/all-by-status?status=SUSPENDIDA&type=CORRIENTE",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "all-by-status"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "SUSPENDIDA"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CORRIENTE"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/all-by-status?status=SUSPENDIDA&type=CORRIENTE",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "all-by-status"
+                      ],
+                      "query": [
+                        {
+                          "key": "status",
+                          "value": "SUSPENDIDA"
+                        },
+                        {
+                          "key": "type",
+                          "value": "CORRIENTE"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": \"2d5aa599-774a-b4a6-1ab4-87514aef93c5\",\n    \"accountNumber\": \"string\",\n    \"balance\": 750.3669349149766,\n    \"status\": \"CERRADA\",\n    \"type\": \"CORRIENTE\",\n    \"holderName\": \"string\"\n  },\n  {\n    \"id\": \"d3ef3d75-255f-349e-410f-28c51220327e\",\n    \"accountNumber\": \"string\",\n    \"balance\": 2077.2980742132586,\n    \"status\": \"SUSPENDIDA\",\n    \"type\": \"AHORRO\",\n    \"holderName\": \"string\"\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "all-by-status-client",
+          "item": [
+            {
+              "name": "get All By Status And Client",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/accounts/all-by-status-client?status=SUSPENDIDA&type=CORRIENTE&clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "all-by-status-client"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "SUSPENDIDA"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CORRIENTE"
+                    },
+                    {
+                      "key": "clientId",
+                      "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/all-by-status-client?status=SUSPENDIDA&type=CORRIENTE&clientId=3d999cc6-c473-c9f8-ca78-7668ff916ae3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        "all-by-status-client"
+                      ],
+                      "query": [
+                        {
+                          "key": "status",
+                          "value": "SUSPENDIDA"
+                        },
+                        {
+                          "key": "type",
+                          "value": "CORRIENTE"
+                        },
+                        {
+                          "key": "clientId",
+                          "value": "3d999cc6-c473-c9f8-ca78-7668ff916ae3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": \"2d5aa599-774a-b4a6-1ab4-87514aef93c5\",\n    \"accountNumber\": \"string\",\n    \"balance\": 750.3669349149766,\n    \"status\": \"CERRADA\",\n    \"type\": \"CORRIENTE\",\n    \"holderName\": \"string\"\n  },\n  {\n    \"id\": \"d3ef3d75-255f-349e-410f-28c51220327e\",\n    \"accountNumber\": \"string\",\n    \"balance\": 2077.2980742132586,\n    \"status\": \"SUSPENDIDA\",\n    \"type\": \"AHORRO\",\n    \"holderName\": \"string\"\n  }\n]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}

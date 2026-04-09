@@ -19,7 +19,6 @@ export class TransactionService {
   getAllTransactions(accountId: string, startDate?: string, endDate?: string): Observable<TransactionDto[]> {
     let params = new HttpParams().set('accountId', accountId);
     
-    // Si hay fechas, las agregamos (Spring Boot espera YYYY-MM-DD)
     if (startDate) params = params.set('startDate', startDate);
     if (endDate) params = params.set('endDate', endDate);
 

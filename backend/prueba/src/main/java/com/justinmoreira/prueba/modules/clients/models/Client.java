@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 
 @Getter
-@Setter// Añadido para tener getters/setters igual que en Person
-@SuperBuilder // Cambiado de @Builder a @SuperBuilder
+@Setter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,7 +19,7 @@ public class Client extends Person {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING) // Recomendado para guardar el texto del enum
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ClientStatus status;
 }
