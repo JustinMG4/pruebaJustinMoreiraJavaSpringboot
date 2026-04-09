@@ -1,0 +1,130 @@
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+  
+  <div class="flex flex-col md:flex-row justify-between items-end mb-6 gap-4 border-b border-gray-200 pb-4">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-800">Gestión General de Cuentas</h2>
+      <p class="text-sm text-gray-500 mt-1">Explora todos los productos financieros del banco.</p>
+    </div>
+    
+    <div class="flex gap-3 w-full md:w-auto">
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Estado</label>
+        <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event); onFilterChange()" class="w-full md:w-auto px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 bg-white">
+          @for (status of statusOptions; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Tipo de Cuenta</label>
+        <select [ngModel]="typeFilter()" (ngModelChange)="typeFilter.set($event); onFilterChange()" class="w-full md:w-auto px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 bg-white">
+          <option [ngValue]="null">Todos los tipos</option>
+          @for (type of typeOptions; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
+    @if (isLoading()) {
+      <div class="flex justify-center py-16"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div></div>
+    } @else if (accounts().length === 0) {
+      <div class="text-center py-16 px-4">
+        <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+        <p class="text-gray-500">No se encontraron cuentas con estos filtros.</p>
+      </div>
+    } @else {
+      <div class="overflow-x-visible min-h-[300px]">
+        <table class="w-full text-left text-sm text-gray-600">
+          <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-gray-200 uppercase text-xs tracking-wider">
+            <tr>
+              <th class="px-6 py-4">N° de Cuenta</th>
+              <th class="px-6 py-4">Titular</th>
+              <th class="px-6 py-4">Tipo</th>
+              <th class="px-6 py-4">Saldo</th>
+              <th class="px-6 py-4">Estado</th>
+              <th class="px-6 py-4 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            @for (account of accounts(); track account.id) {
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-mono font-medium text-gray-900">{{ account.accountNumber }}</td>
+                <td class="px-6 py-4 font-medium">{{ account.holderName }}</td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs font-medium">{{ account.type }}</span>
+                </td>
+                <td class="px-6 py-4 font-semibold text-green-600">${{ account.balance | number:'1.2-2' }}</td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 rounded-full text-xs font-medium"
+                    [ngClass]="{'bg-green-100 text-green-700': account.status === 'ACTIVA', 'bg-yellow-100 text-yellow-700': account.status === 'SUSPENDIDA', 'bg-red-100 text-red-700': account.status === 'CERRADA'}">
+                    {{ account.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-center relative">
+                  <button (click)="toggleDropdown(account.id)" class="text-gray-500 hover:text-gray-800 p-2 rounded-full hover:bg-gray-200 focus:outline-none transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                  </button>
+
+                  @if (activeDropdown() === account.id) {
+                    <div class="fixed inset-0 z-40" (click)="toggleDropdown(account.id)"></div>
+                    <div class="absolute right-8 top-10 w-48 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden text-left">
+                      <ul class="py-1 text-sm text-gray-700">
+                        <li>
+                          <a [routerLink]="['/cuentas', account.id, 'movimientos']" class="block w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center gap-2 text-blue-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            Ver movimientos
+                          </a>
+                        </li>
+                        <li class="border-t border-gray-100">
+                          <button (click)="openAccStatusModal(account)" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-yellow-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                            Cambiar estado
+                          </button>
+                        </li>
+                        <li>
+                          <button (click)="onCloseAccount(account)" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 font-medium flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                            Cerrar cuenta
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
+
+@if (isAccStatusModalOpen()) {
+  <div class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Estado de Cuenta</h3>
+        <p class="text-sm text-gray-500 mb-6">Modifica el estado de la cuenta <span class="font-mono font-bold text-gray-700">{{ selectedAccount()?.accountNumber }}</span></p>
+
+        <div class="space-y-4">
+          <label class="block text-sm font-medium text-gray-700">Seleccionar Estado</label>
+          <select [ngModel]="tempAccStatus()" (ngModelChange)="tempAccStatus.set($event)" 
+                  class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50 text-gray-800">
+            @for (status of filteredAccountStatuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="flex gap-3 mt-8">
+          <button (click)="isAccStatusModalOpen.set(false)" class="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50">Cancelar</button>
+          <button (click)="confirmAccStatusChange()" [disabled]="isSubmitting()" class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

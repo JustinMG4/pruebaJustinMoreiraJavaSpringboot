@@ -1,0 +1,475 @@
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+
+    <button (click)="goBack()"
+        class="flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+            </path>
+        </svg>
+        Volver a Clientes
+    </button>
+
+    @if (isLoadingProfile()) {
+    <div class="flex justify-center py-10">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+    </div>
+    } @else if (client()) {
+
+    <div
+        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+
+        <div class="flex items-center gap-5">
+            <div
+                class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl font-bold uppercase">
+                {{ client()!.name.charAt(0) }}
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">{{ client()!.name }}</h2>
+                <div class="flex flex-wrap items-center gap-3 mt-1 text-sm text-gray-500">
+                    <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2">
+                            </path>
+                        </svg> {{ client()!.identificationNumber }}</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
+                        </svg> {{ client()!.phoneNumber }}</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700">{{ client()!.status
+                        }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto">
+            <button (click)="openEditModal()"
+                class="flex-1 md:flex-none px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium transition-colors">
+                Editar Perfil
+            </button>
+            <button (click)="openStatusModal()"
+                class="flex-1 md:flex-none px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900 text-sm font-medium transition-colors">
+                Cambiar Estado
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-10">
+
+        <div class="flex flex-col md:flex-row justify-between items-end mb-6 gap-4 border-b border-gray-200 pb-4">
+            <div>
+                <h3
+                    class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-400">
+                    Cuentas del Cliente
+                </h3>
+                <p class="text-sm text-gray-500 mt-1">Gestiona los productos financieros asociados a este perfil.</p>
+            </div>
+
+            <div class="flex gap-3 w-full md:w-auto">
+                <button (click)="openCreateAccountModal()"
+                    class="w-full md:w-auto px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-semibold shadow-sm transition-colors flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Crear cuenta
+                </button>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Estado (Obligatorio)</label>
+                    <select [ngModel]="accountStatusFilter()"
+                        (ngModelChange)="accountStatusFilter.set($event); onFilterChange()"
+                        class="w-full md:w-auto px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                        @for (status of statusOptions; track status) {
+                        <option [value]="status">{{ status }}</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Tipo (Opcional)</label>
+                    <select [ngModel]="accountTypeFilter()"
+                        (ngModelChange)="accountTypeFilter.set($event); onFilterChange()"
+                        class="w-full md:w-auto px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option [ngValue]="null">Todos los tipos</option>
+                        @for (type of typeOptions; track type) {
+                        <option [value]="type">{{ type }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-visible">
+            @if (isLoadingAccounts()) {
+            <div class="flex justify-center py-10">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+            } @else if (accounts().length === 0) {
+            <div class="text-center py-12 px-4">
+                <svg class="mx-auto h-12 w-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                    </path>
+                </svg>
+                <p class="text-gray-500">No se encontraron cuentas con estos filtros.</p>
+            </div>
+            } @else {
+            <div class="overflow-x-visible">
+                <table class="w-full text-left text-sm text-gray-600">
+                    <thead class="bg-slate-50 text-slate-600 font-semibold border-b border-gray-200 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-4">N° de Cuenta</th>
+                            <th class="px-6 py-4">Titular</th>
+                            <th class="px-6 py-4">Tipo</th>
+                            <th class="px-6 py-4">Saldo</th>
+                            <th class="px-6 py-4">Estado</th>
+                            <th class="px-6 py-4 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @for (account of accounts(); track account.id) {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-mono font-medium text-gray-900">{{ account.accountNumber }}</td>
+                            <td class="px-6 py-4">{{ account.holderName }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs font-medium">{{
+                                    account.type }}</span>
+                            </td>
+                            <td class="px-6 py-4 font-semibold text-green-600">${{ account.balance | number:'1.2-2' }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium" [ngClass]="{
+                          'bg-green-100 text-green-700': account.status === 'ACTIVA',
+                          'bg-yellow-100 text-yellow-700': account.status === 'SUSPENDIDA',
+                          'bg-red-100 text-red-700': account.status === 'CERRADA'
+                        }">
+                                    {{ account.status }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center relative">
+
+                                <button (click)="toggleDropdown(account.id)"
+                                    class="text-gray-500 hover:text-gray-800 p-2 rounded-full hover:bg-gray-200 focus:outline-none transition-colors">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z">
+                                        </path>
+                                    </svg>
+                                </button>
+
+                                @if (activeDropdown() === account.id) {
+                                <div class="fixed inset-0 z-40" (click)="toggleDropdown(account.id)"></div>
+
+                                <div
+                                    class="absolute right-8 top-10 w-48 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden text-left">
+                                    <ul class="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <a [routerLink]="['/cuentas', account.id, 'movimientos']"
+                                                class="block w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center gap-2 text-blue-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                                                    </path>
+                                                </svg>
+                                                Ver movimientos
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button (click)="openTransactionModal(account)"
+                                                class="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center gap-2 text-green-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                    </path>
+                                                </svg>
+                                                Transacción
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button (click)="openAccStatusModal(account)"
+                                                class="w-full text-left px-4 py-2 hover:bg-gray-50 text-yellow-600 flex items-center gap-2">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                                </svg>
+                                                Cambiar estado
+                                            </button>
+                                        </li>
+
+                                        <li>
+                                            <button (click)="onCloseAccount(account)"
+                                                class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 font-medium flex items-center gap-2">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636">
+                                                    </path>
+                                                </svg>
+                                                Cerrar cuenta
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+@if (isEditModalOpen()) {
+<div
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-slate-900/40 backdrop-blur-sm transition-opacity">
+    <div class="relative w-full max-w-2xl p-4 md:p-6">
+        <div class="relative bg-white rounded-2xl shadow-2xl">
+            <div class="flex items-center justify-between p-5 border-b border-gray-100 rounded-t-2xl">
+                <h3 class="text-xl font-bold text-gray-900">Editar Perfil del Cliente</h3>
+                <button (click)="closeEditModal()"
+                    class="text-gray-400 hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto flex justify-center items-center">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+
+            <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="p-5 md:p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Nombre Completo</label>
+                        <input type="text" formControlName="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Identificación</label>
+                        <input type="text" formControlName="identificationNumber"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Teléfono</label>
+                        <input type="text" formControlName="phoneNumber"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Edad</label>
+                        <input type="number" formControlName="age"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Género</label>
+                        <select formControlName="isMale"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                            <option [value]="true">Hombre</option>
+                            <option [value]="false">Mujer</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Dirección</label>
+                        <input type="text" formControlName="direction"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" (click)="closeEditModal()"
+                        class="text-gray-700 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-50">Cancelar</button>
+                    <button type="submit" [disabled]="isSubmittingEdit()"
+                        class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">Actualizar
+                        Perfil</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}
+@if (isStatusModalOpen()) {
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Cambiar Estado</h3>
+            <p class="text-sm text-gray-500 mb-6">Selecciona el nuevo estado para el perfil de {{ client()?.name }}</p>
+
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Nuevo Estado</label>
+                <select [ngModel]="tempStatus()" (ngModelChange)="tempStatus.set($event)"
+                    class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50">
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                    <option value="SUSPENDED">SUSPENDED</option>
+                </select>
+            </div>
+
+            <div class="flex gap-3 mt-8">
+                <button (click)="isStatusModalOpen.set(false)"
+                    class="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                    Cancelar
+                </button>
+                <button (click)="confirmStatusChange()" [disabled]="isSubmittingEdit()"
+                    class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors">
+                    @if (isSubmittingEdit()) {
+                    <span class="inline-block animate-spin mr-2">↻</span>
+                    }
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@if (isCreateAccountModalOpen()) {
+<div
+    class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 transition-opacity">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="p-6">
+            <div class="flex items-center justify-center w-12 h-12 bg-blue-50 text-blue-600 rounded-full mb-4 mx-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                    </path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Crear Nueva Cuenta</h3>
+            <p class="text-sm text-gray-500 text-center mb-6">Selecciona el tipo de producto financiero que deseas
+                aperturar para {{ client()?.name }}.</p>
+
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Tipo de Cuenta</label>
+                <select [ngModel]="newAccountType()" (ngModelChange)="newAccountType.set($event)"
+                    class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50 text-gray-800">
+                    @for (type of typeOptions; track type) {
+                    <option [value]="type">{{ type }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="flex gap-3 mt-8">
+                <button (click)="isCreateAccountModalOpen.set(false)"
+                    class="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                    Cancelar
+                </button>
+                <button (click)="confirmCreateAccount()" [disabled]="isSubmittingAccount()"
+                    class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors flex justify-center items-center">
+                    @if (isSubmittingAccount()) {
+                    <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2">
+                    </div>
+                    }
+                    Aperturar Cuenta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@if (isAccStatusModalOpen()) {
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Estado de Cuenta</h3>
+            <p class="text-sm text-gray-500 mb-6">Modifica el estado de la cuenta <span
+                    class="font-mono font-bold text-gray-700">{{ selectedAccount()?.accountNumber }}</span></p>
+
+            <div class="space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Seleccionar Estado</label>
+                <select [ngModel]="tempAccStatus()" (ngModelChange)="tempAccStatus.set($event)"
+                    class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50 text-gray-800">
+                    @for (status of filteredAccountStatuses; track status) {
+                    <option [value]="status">{{ status }}</option>
+                    }
+                </select>
+                <p class="text-xs text-amber-600 italic">* Para dar de baja la cuenta permanentemente, utiliza la opción
+                    "Cerrar cuenta".</p>
+            </div>
+
+            <div class="flex gap-3 mt-8">
+                <button (click)="isAccStatusModalOpen.set(false)"
+                    class="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                    Cancelar
+                </button>
+                <button (click)="confirmAccStatusChange()" [disabled]="isSubmittingAccount()"
+                    class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors">
+                    Actualizar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@if (isTransactionModalOpen()) {
+<div class="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-1">Nueva Transacción</h3>
+            <p class="text-sm text-gray-500 mb-6">Cuenta N° <span class="font-mono font-bold text-gray-800">{{
+                    transactionAccount()?.accountNumber }}</span></p>
+
+            <form [formGroup]="transactionForm" (ngSubmit)="submitTransaction()" class="space-y-4">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Operación</label>
+                    <select formControlName="type"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
+                        @for (type of transactionTypes; track type) {
+                        <option [value]="type">{{ type }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Monto ($)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 font-bold">$</span>
+                        <input type="number" step="0.01" formControlName="amount"
+                            class="w-full pl-8 p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50 text-xl font-semibold text-gray-900"
+                            placeholder="0.00">
+                    </div>
+                    @if (transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched) {
+                    <p class="text-xs text-red-500 mt-1">El monto debe ser mayor a 0.</p>
+                    }
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Pin / Contraseña del Cliente</label>
+                    <input type="password" formControlName="password"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50"
+                        placeholder="••••••••">
+                    @if (transactionForm.get('password')?.invalid && transactionForm.get('password')?.touched) {
+                    <p class="text-xs text-red-500 mt-1">La contraseña es requerida para continuar.</p>
+                    }
+                </div>
+
+                <div class="flex gap-3 mt-8">
+                    <button type="button" (click)="isTransactionModalOpen.set(false)"
+                        class="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" [disabled]="isSubmittingTransaction()"
+                        class="flex-1 py-2.5 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 transition-colors flex justify-center items-center">
+                        @if (isSubmittingTransaction()) {
+                        <span class="inline-block animate-spin mr-2">↻</span> Procesando...
+                        } @else {
+                        Procesar Operación
+                        }
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

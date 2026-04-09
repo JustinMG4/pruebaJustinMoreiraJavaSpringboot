@@ -1,0 +1,260 @@
+<div class="p-8 max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <h2 class="text-3xl font-bold text-gray-800">Gestión de Clientes</h2>
+
+        <div class="flex items-center gap-4 w-full md:w-auto">
+            <input type="text" placeholder="Buscar por nombre o cédula..." [ngModel]="searchTerm()"
+                (ngModelChange)="searchTerm.set($event)"
+                class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+
+            <select [ngModel]="currentStatus()" (ngModelChange)="onStatusChange($event)"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+                @for (status of statusOptions; track status) {
+                <option [value]="status">{{ status }}</option>
+                }
+            </select>
+
+            <button (click)="openModal()"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors whitespace-nowrap shadow-sm">
+                + Registrar Cliente
+            </button>
+        </div>
+    </div>
+
+    @if (isLoading()) {
+    <div class="flex justify-center items-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+    } @else {
+
+    @if (clients().length === 0) {
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-16 text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No hay clientes registrados</h3>
+        <p class="text-gray-500 mb-6">Parece que aún no hay clientes con este estado en el sistema.</p>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
+            Registrar mi primer cliente
+        </button>
+    </div>
+    } @else {
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-600">
+                <thead class="bg-gray-50 text-gray-700 font-semibold border-b border-gray-200 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-4">Nombre</th>
+                        <th class="px-6 py-4">Identificación</th>
+                        <th class="px-6 py-4">Edad</th>
+                        <th class="px-6 py-4">Género</th>
+                        <th class="px-6 py-4">Teléfono</th>
+                        <th class="px-6 py-4">Dirección</th>
+                        <th class="px-6 py-4">Estado</th>
+                        <th class="px-6 py-4 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @for (client of filteredClients(); track client.id) {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 font-medium text-gray-900">{{ client.name }}</td>
+                        <td class="px-6 py-4">{{ client.identificationNumber }}</td>
+                        <td class="px-6 py-4">{{ client.age }} años</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 bg-gray-100 rounded-md text-xs">
+                                {{ client.isMale ? 'Hombre' : 'Mujer' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">{{ client.phoneNumber }}</td>
+                        <td class="px-6 py-4 truncate max-w-xs" [title]="client.direction">{{ client.direction }}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium" [ngClass]="{
+                        'bg-green-100 text-green-700': client.status === 'ACTIVE',
+                        'bg-red-100 text-red-700': client.status === 'INACTIVE',
+                        'bg-yellow-100 text-yellow-700': client.status === 'SUSPENDED'
+                      }">
+                                {{ client.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-center relative">
+                            <button (click)="toggleDropdown(client.id)"
+                                class="text-gray-500 hover:text-gray-800 p-2 rounded-full hover:bg-gray-200 focus:outline-none">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z">
+                                    </path>
+                                </svg>
+                            </button>
+
+                            @if (activeDropdown() === client.id) {
+                            <div class="fixed inset-0 z-40" (click)="toggleDropdown(client.id)"></div>
+                            <div
+                                class="absolute right-8 top-10 w-48 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden text-left">
+                                <ul class="py-1 text-sm text-gray-700">
+                                    <li>
+                                        <a [routerLink]="['/clientes', client.id]"
+                                            class="block px-4 py-2 hover:bg-gray-50 text-blue-600">Ver detalle</a>
+                                    </li>
+                                    <li>
+                                        <button (click)="openModal(client)"
+                                            class="w-full text-left px-4 py-2 hover:bg-gray-50 text-amber-600">Editar</button>
+                                    </li>
+                                    <li class="border-t border-gray-100">
+                                        <button (click)="openStatusModal(client)"
+                                            class="w-full text-left px-4 py-2 hover:bg-gray-50 text-yellow-600">Cambiar
+                                            estado</button>
+                                    </li>
+                                    <li>
+                                        <button (click)="onDeleteClient(client)"
+                                            class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 font-medium transition-colors">
+                                            Eliminar Cliente
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (filteredClients().length === 0 && clients().length > 0) {
+            <div class="text-center py-8 text-gray-500">
+                No se encontraron clientes que coincidan con la búsqueda.
+            </div>
+            }
+        </div>
+    </div>
+    }
+    }
+</div>
+
+@if (isModalOpen()) {
+<div
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-slate-900/40 backdrop-blur-sm transition-opacity">
+    <div class="relative w-full max-w-2xl p-4 md:p-6">
+
+        <div class="relative bg-white rounded-2xl shadow-2xl">
+
+            <div class="flex items-center justify-between p-5 border-b border-gray-100 rounded-t-2xl">
+                <h3 class="text-xl font-bold text-gray-900">Registrar Nuevo Cliente</h3>
+                <button (click)="closeModal()"
+                    class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                </button>
+            </div>
+
+            <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="p-5 md:p-6 space-y-4">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Nombre Completo</label>
+                        <input type="text" formControlName="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Ej. Juan Pérez">
+                    </div>
+
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Identificación</label>
+                        <input type="text" formControlName="identificationNumber"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Número de cédula">
+                    </div>
+
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Teléfono</label>
+                        <input type="text" formControlName="phoneNumber"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Ej. 0987654321">
+                    </div>
+
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Edad</label>
+                        <input type="number" formControlName="age"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    </div>
+
+                    <div>
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Género</label>
+                        <select formControlName="isMale"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option [value]="true">Hombre</option>
+                            <option [value]="false">Mujer</option>
+                        </select>
+                    </div>
+
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Dirección</label>
+                        <input type="text" formControlName="direction"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Dirección domiciliaria">
+                    </div>
+
+                    @if (!editingClientId()) {
+                    <div class="col-span-2">
+                        <label class="block mb-1 text-sm font-medium text-gray-900">Pin de acceso</label>
+                        <input type="password" formControlName="password" class="..." placeholder="••••••••">
+                    </div>
+                    }
+
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" (click)="closeModal()"
+                        class="text-gray-700 bg-white border border-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button type="submit" [disabled]="isSubmitting()"
+                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                        @if (isSubmitting()) {
+                        <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Guardando...
+                        } @else {
+                        {{ editingClientId() ? 'Actualizar Cliente' : 'Registrar Cliente' }}
+                        }
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+}
+
+@if (isStatusModalOpen()) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-4 text-center">Cambiar Estado de Cliente</h3>
+        <p class="text-gray-500 text-center mb-6">
+            Selecciona el nuevo estado para <span class="font-semibold text-gray-800">{{ selectedClient()?.name
+                }}</span>
+        </p>
+
+        <select [(ngModel)]="newStatus"
+            class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-gray-50 mb-8">
+            @for (status of statusOptions; track status) {
+            <option [value]="status">{{ status }}</option>
+            }
+        </select>
+
+        <div class="flex gap-3">
+            <button (click)="isStatusModalOpen.set(false)"
+                class="flex-1 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                Cancelar
+            </button>
+            <button (click)="onConfirmStatusChange()" [disabled]="isSubmitting()"
+                class="flex-1 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors">
+                Confirmar Cambio
+            </button>
+        </div>
+    </div>
+</div>
+}
