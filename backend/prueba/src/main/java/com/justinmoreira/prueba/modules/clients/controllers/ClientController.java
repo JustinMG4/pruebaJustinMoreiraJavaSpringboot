@@ -18,6 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Clients", description = "Endpoints for controlling client operations")
 public class ClientController {
     private final ClientService service;
@@ -27,6 +28,14 @@ public class ClientController {
             @RequestBody RegisterClientDto dto
     ) {
         return ResponseEntity.ok(service.create(dto));
+    }
+
+    @PostMapping("/verify-password")
+    ResponseEntity<Boolean> verifyPassword(
+            @RequestParam UUID clientId,
+            @RequestBody String password
+    ) {
+        return ResponseEntity.ok(service.validatePassword(password, clientId));
     }
 
     @GetMapping("/all")

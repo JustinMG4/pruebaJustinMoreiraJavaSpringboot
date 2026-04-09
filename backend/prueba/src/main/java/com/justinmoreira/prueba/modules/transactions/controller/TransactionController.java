@@ -17,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/transactions")
 @RequiredArgsConstructor
 @Tag(name = "Transactions", description = "Endpoints for controlling transactions operations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TransactionController {
     private final TransactionService service;
 

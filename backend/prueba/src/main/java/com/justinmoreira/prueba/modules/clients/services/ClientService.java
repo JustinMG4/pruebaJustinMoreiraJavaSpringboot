@@ -36,6 +36,14 @@ public class ClientService {
 
     }
 
+    public Boolean validatePassword(String rawPassword, UUID clientId) {
+        Client client = findEntityById(clientId);
+        if (!BCrypt.checkpw(rawPassword, client.getPassword())) {
+            throw new AppException("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
+        }
+        return true;
+    }
+
     private void existByIdentificationNumber(String identificationNumber) {
         if (repository.existsByIdentificationNumber(identificationNumber)) {
             throw new AppException("Ya existe un cliente con ese número de identificación", HttpStatus.BAD_REQUEST);
@@ -80,7 +88,11 @@ public class ClientService {
 
     @Transactional
     public void changeStatus(UUID id, ClientStatus status) {
-        Client client = findEntityById(id);
+        if (status.equals(ClientStatus.INACTIVE)) {
+            throw new AppException("No se puede cambiar el estado a INACTIVE usando este método. Use borrar cliente para eso.", HttpStatus.BAD_REQUEST);
+        }
+        Client client = repository.findById(id)
+                .orElseThrow(() -> new AppException("Cliente no encontrado", HttpStatus.NOT_FOUND));
         client.setStatus(status);
         repository.save(client);
     }

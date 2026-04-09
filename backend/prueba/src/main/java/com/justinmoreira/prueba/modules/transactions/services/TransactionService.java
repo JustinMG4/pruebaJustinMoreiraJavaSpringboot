@@ -37,6 +37,7 @@ public class TransactionService {
     @Transactional
     public NewTransactionResponseDto create(@Valid NewTransactionDto dto, UUID accountId) {
         Account account = accountService.findEntityByIdLock(accountId);
+        accountService.isActiveForTransactions(account);
         Transaction transaction = mapper.toEntity(dto, account);
         if (transaction.getType().equals(TransactionType.DEBITO)){
             checkMaxDailyAmount(transaction, accountId);
@@ -47,6 +48,7 @@ public class TransactionService {
         account.setBalance(newBalance);
         return mapper.toNewTransactionDto(savedTransaction, newBalance);
     }
+
 
     public List<TransactionDto> findAllByAccountFilters(UUID accountId, LocalDate startDate, LocalDate endDate) {
         if (startDate != null && endDate != null) {

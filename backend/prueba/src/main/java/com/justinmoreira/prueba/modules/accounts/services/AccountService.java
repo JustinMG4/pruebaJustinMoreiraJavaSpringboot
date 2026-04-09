@@ -38,6 +38,9 @@ public class AccountService {
 
     @Transactional
     public void changeAccountStatus(UUID accountId, AccountStatus accountStatus) {
+        if (accountStatus.equals(AccountStatus.CERRADA)) {
+            throw new AppException("Para cerrar una cuenta, use el proceso dedicado a esa funcion", HttpStatus.BAD_REQUEST);
+        }
         Account account = findEntityById(accountId);
         account.setStatus(accountStatus);
         repository.save(account);
@@ -123,6 +126,12 @@ public class AccountService {
                         "No se pudo asignar un número de cuenta tras " + MAX_ATTEMPTS + " intentos. " +
                                 "Es posible que el espacio de numeración esté saturado."
                         , HttpStatus.SERVICE_UNAVAILABLE));
+    }
+
+    public void isActiveForTransactions(Account account) {
+        if (!account.getStatus().equals(AccountStatus.ACTIVA)) {
+            throw new AppException("La cuenta no está activa para realizar transacciones", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
